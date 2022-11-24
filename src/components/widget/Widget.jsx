@@ -11,13 +11,14 @@ const Widget = ({ type }) => {
   const [diff, setDiff] = useState(null);
   let data;
 
+  //add user details to dashboard
   switch (type) {
     case "user":
       data = {
         title: "USERS",
         isMoney: false,
         link: "See all users",
-        query:"users",
+        query: "users",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -32,6 +33,10 @@ const Widget = ({ type }) => {
     default:
       break;
   }
+
+  // Instead, use useEffect. The function passed to useEffect will run after the render is committed to the screen.
+  //Think of effects as an escape hatch from React’s purely functional world into the imperative world.
+
   useEffect(() => {
     const fetchData = async () => {
       const today = new Date();
@@ -54,7 +59,8 @@ const Widget = ({ type }) => {
 
       setAmount(lastMonthData.docs.length);
       setDiff(
-        ((lastMonthData.docs.length - prevMonthData.docs.length) / prevMonthData.docs.length) *
+        ((lastMonthData.docs.length - prevMonthData.docs.length) /
+          prevMonthData.docs.length) *
           100
       );
     };
@@ -63,6 +69,7 @@ const Widget = ({ type }) => {
 
   return (
     <div className="widget">
+      {/* make counter */}
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
@@ -70,9 +77,11 @@ const Widget = ({ type }) => {
         </span>
         <span className="link">{data.link}</span>
       </div>
+
+      {/* make ui icon in right */}
       <div className="right">
         <div className={`percentage ${diff < 0 ? "negative" : "positive"}`}>
-          {diff < 0 ? <KeyboardArrowDownIcon/> : <KeyboardArrowUpIcon/> }
+          {diff < 0 ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
           {diff} %
         </div>
         {data.icon}

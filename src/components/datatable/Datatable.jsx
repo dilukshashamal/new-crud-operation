@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   collection,
-  getDocs,
   deleteDoc,
   doc,
   onSnapshot,
@@ -35,6 +34,8 @@ const Datatable = () => {
     };
   }, []);
 
+
+//handle delete statement
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "users", id));
@@ -66,6 +67,8 @@ const Datatable = () => {
       },
     },
   ];
+
+  //make add new button and transfer another new page
   return (
     <div className="datatable">
       <div className="datatableTitle">
@@ -74,13 +77,16 @@ const Datatable = () => {
           Add New
         </Link>
       </div>
+
+      {/* view table in user */}
       <DataGrid
         className="datagrid"
         rows={data}
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
+        //If want add check box use below
+        // checkboxSelection
       />
     </div>
   );
